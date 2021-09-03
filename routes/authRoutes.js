@@ -26,6 +26,8 @@ module.exports = app => {
 
     app.get(
         '/api/current_user', (req, res) => {
+            //res.send(req.session); serve para verificar o dado 
+            //                       extraído do cookie
         res.send(req.user);
     });
 };

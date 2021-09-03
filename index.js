@@ -11,6 +11,10 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
+//  Middleware resposável pelo hadler dos cookies.
+//  Extrai os dados e coloca em passport.session
+//  Cookie = sessão
+//  Cookie-session guarda dados da sessão nele mesmo
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000, //30 dias em ms

@@ -16,7 +16,7 @@ passport.deserializeUser((id, done) => {
 });
 /*
     Seta a estrategia de acesso ao googleoath
-*/ 
+*/
 passport.use(
     new GoogleStrategy(
         {
@@ -24,18 +24,16 @@ passport.use(
             clientSecret: keys.googleClientSecret,
             callbackURL: '/auth/google/callback',
             proxy: true
-        }, 
-        (accessToken, refreshToken, profile, done) => {
-            User.findOne({ googleId: profile.id }).then(existingUser => {
-                if (existingUser) {
-                    //Ja existe um usuario com o google ID recebido
-                    done(null, existingUser);
-                } else {
-                    //Náo existe um usuario com o google ID recebido, cria registro novo
-                    new User({ googleId: profile.id }).save()
-                        .then(user => done(null, user));
-                }
-            }); 
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            const existingUser = await User.findOne({ googleId: profile.id })
+            if (existingUser) {
+                //Ja existe um usuario com o google ID recebido
+                return done(null, existingUser);
+            }
+            //Náo existe um usuario com o google ID recebido, cria registro novo
+            const user = await new User({ googleId: profile.id }).save()
+            done(null, user);
         }
     )
-); 
+);

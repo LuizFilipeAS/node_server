@@ -14,3 +14,7 @@ ReactDOM.render(
     <Provider store={store}><App /></Provider>,
     document.querySelector('#root')
 );
+
+/* Checa leitura das chaves nos arquivos .env
+console.log('STRIPE KEY IS ', process.env.REACT_APP_STRIPE_KEY);
+console.log('ENVIRONMENT IS ', process.env.NODE_ENV); */
